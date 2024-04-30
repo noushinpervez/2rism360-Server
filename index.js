@@ -33,14 +33,18 @@ async function run() {
             const cursor = touristSpotCollection.find({ uid: req.params.uid });
             const result = await cursor.toArray();
             res.send(result);
-        })
+        });
+
+        app.get("/tourist-spot/:id", async (req, res) => {
+            const result = await touristSpotCollection.findOne({ _id: new ObjectId(req.params.id) });
+            res.send(result);
+        });
 
         app.post("/add-spot", async (req, res) => {
             const newSpot = req.body;
-            console.log(newSpot);
             const result = await touristSpotCollection.insertOne(newSpot);
             res.send(result);
-        })
+        });
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
