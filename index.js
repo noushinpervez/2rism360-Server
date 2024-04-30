@@ -42,6 +42,8 @@ async function run() {
 
         app.put("/update-tourist-spot/:id", async (req, res) => {
             const query = { _id: new ObjectId(req.params.id) };
+            const options = { upsert: true };
+
             const data = {
                 $set: {
                     image: req.body.image,
@@ -56,7 +58,8 @@ async function run() {
                     username: req.body.username,
                 }
             };
-            const result = await touristSpotCollection.updateOne(query, data);
+            
+            const result = await touristSpotCollection.updateOne(query, data, options);
             res.send(result);
         });
 
