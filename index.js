@@ -28,8 +28,9 @@ async function run() {
         // await client.connect();
 
         const touristSpotCollection = client.db("touristSpotDB").collection("touristSpot");
+        const countryCollection = client.db("touristSpotDB").collection("country");
 
-        app.get("/tourist-spot", async (req, res) => {
+        app.get("/tourist-spots", async (req, res) => {
             const cursor = touristSpotCollection.find();
             const result = await cursor.toArray();
             res.send(result);
@@ -41,7 +42,7 @@ async function run() {
             res.send(result);
         });
 
-        app.get("/tourist-spot/:id", async (req, res) => {
+        app.get("/tourist-spots/:id", async (req, res) => {
             const result = await touristSpotCollection.findOne({ _id: new ObjectId(req.params.id) });
             res.send(result);
         });
@@ -77,6 +78,27 @@ async function run() {
         app.delete("/delete/:id", async (req, res) => {
             const result = await touristSpotCollection.deleteOne({ _id: new ObjectId(req.params.id) });
             res.send(result);
+        });
+
+        app.get("/countries", async (req, res) => {
+            const cursor = countryCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
+        app.get("/countries/:countryName", async (req, res) => {
+            const countryCursor = countryCollection.findOne({ country_name: req.params.countryName });
+            const touristSpotCursor = touristSpotCollection.find({ country_name: req.params.countryName });
+
+            const countryData = await countryCursor;
+            const touristSpotData = await touristSpotCursor.toArray();
+
+            const combinedData = {
+                country: countryData,
+                touristSpots: touristSpotData
+            };
+
+            res.send(combinedData);
         });
 
         // Send a ping to confirm a successful connection
