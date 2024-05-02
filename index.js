@@ -54,14 +54,13 @@ async function run() {
                 $set: {
                     image: req.body.image,
                     tourist_spot_name: req.body.tourist_spot_name,
+                    country_name: req.body.country_name,
                     location: req.body.location,
                     short_description: req.body.short_description,
                     average_cost: req.body.average_cost,
                     seasonality: req.body.seasonality,
                     travel_time: req.body.travel_time,
-                    totalVisitorsPerYear: req.body.totalVisitorsPerYear,
-                    email: req.body.email,
-                    username: req.body.username,
+                    totalVisitorsPerYear: req.body.totalVisitorsPerYear
                 }
             };
             
