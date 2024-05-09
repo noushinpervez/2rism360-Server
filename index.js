@@ -47,7 +47,7 @@ async function run() {
             res.send(result);
         });
 
-        app.put("/update-tourist-spot/:id", async (req, res) => {
+        app.put("/update-tourist-spots/:id", async (req, res) => {
             const query = { _id: new ObjectId(req.params.id) };
             const options = { upsert: true };
 
